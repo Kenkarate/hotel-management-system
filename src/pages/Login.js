@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const auth = getAuth(app);
 
@@ -18,7 +18,7 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         sessionStorage.setItem('token',user.accessToken)
-        navigate('/dashboard')
+        window.location.replace('/dashboard')
         console.log("loggedin", user);
         setEmail("");
         setPassword("");
