@@ -7,8 +7,9 @@ import CreateUser from "./pages/CreateUser";
 import MainDashboard from "./pages/Dashboard/MainDashboard";
 import Header from "./components/Header";
 import NewReservation from "./pages/Reservations/NewReservation";
-import ManageRooms from "./pages/Rooms/ManageRooms";
+
 import AddRoom from "./pages/Rooms/AddRoom";
+import ListRooms from "./pages/Rooms/ListRooms";
 function App() {
   const authToken = sessionStorage.getItem("token");
 
@@ -28,8 +29,9 @@ function App() {
 
           <Route exact path="/dashboard" element={<MainDashboard />} />
           <Route exact path="/reservation" element={<NewReservation />} />
-          <Route exact path="/manage-rooms" element={<ManageRooms />} />
+
           <Route exact path="/add-room" element={<AddRoom />} />
+          <Route exact path="/rooms" element={<ListRooms />} />
           {/* RESET PASSWORD ROUTES */}
           {/* <Route
                         exact

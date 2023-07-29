@@ -1,25 +1,98 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import { Space, Switch } from "antd";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 
 function AddRoom() {
+  const [roomDetails, setRoomDetails] = useState({
+    RoomName: "",
+    Category: "",
+    RoomNumber: null,
+    BedType: "",
+    NumberOfBeds: 1,
+    AC: true,
+    Toilets: 0,
+    Floor: "",
+    CleaningStatus: "",
+    Price: null,
+    Availablility: true,
+    tax: 0,
+  });
+  const RoomCollection = collection(db, "rooms");
+
+  const handleSubmit = async () => {
+  // Check if all required fields are filled out
+  const requiredFields = ["RoomName", "Category", "RoomNumber", "BedType", "NumberOfBeds", "Toilets", "Floor", "CleaningStatus", "Price"];
+  const isAnyFieldEmpty = requiredFields.some(field => !roomDetails[field]);
+
+  if (isAnyFieldEmpty) {
+    // Display an error message to the user or handle the validation error in any other way
+    alert("Please fill out all the required fields.");
+    return;
+  }
+
+  try {
+    await addDoc(RoomCollection, roomDetails);
+    // Reset the form after successful submission
+    setRoomDetails({
+      RoomName: "",
+      Category: "",
+      RoomNumber: null,
+      BedType: "",
+      NumberOfBeds: 1,
+      AC: true,
+      Toilets: 0,
+      Floor: "",
+      CleaningStatus: "",
+      Price: null,
+      Availablility: true,
+      tax: 0,
+    });
+    alert("Room details added successfully!");
+  } catch (err) {
+    console.log(err);
+    alert("An error occurred while adding room details. Please try again.");
+  }
+};
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRoomDetails((prevRoomDetails) => ({
+      ...prevRoomDetails,
+      [name]: value,
+    }));
+  };
+  // console.log(roomDetails);
   return (
     <div>
       <Sidebar />
       <div className="ml-[20vw] pt-[12vh]">
         {" "}
-        <h2 className="my-5 text-3xl font-semibold">Rooms</h2>
-        <div className="border mr-10 rounded grid grid-cols-3 p-5">
+        <h2 className=" text-3xl font-semibold">Rooms</h2>
+        <p>
+          <a href="/rooms">Rooms</a>/Add Rooms
+        </p>
+        <div className="border mr-10 rounded grid lg:grid-cols-4 text-xl p-5 mt-10">
           <div className="py-5">
             <label htmlFor="" className="">
               Name :{" "}
             </label>
-            <input type="text" name="" id="" className="border rounded px-2" />
+            <input
+              onChange={handleChange}
+              type="text"
+              name="RoomName"
+              id=""
+              required
+              className="border rounded px-2"
+            />
           </div>
           <div className="py-5">
             <label htmlFor="" className="">
-              Type :{" "}
+              Category :{" "}
             </label>
-            <select>
+            <select onChange={handleChange} name="Category">
               <option>Suite</option>
               <option>Premium</option>
               <option>Economy</option>
@@ -30,18 +103,123 @@ function AddRoom() {
             <label htmlFor="" className="">
               Room Number :{" "}
             </label>
-            <input type="text" name="" id="" className="border rounded px-2" />{" "}
+            <input
+              onChange={handleChange}
+              type="text"
+              name="RoomNumber"
+              id=""
+              className="border rounded px-2"
+            />{" "}
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              Bed Type :{" "}
+            </label>
+            <select onChange={handleChange} name="BedType">
+              <option>Queen bed</option>
+              <option>Twin Bed</option>
+              <option>Standard Double bed</option>
+              <option>King Bed</option>
+            </select>
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              Number Of Beds :{" "}
+            </label>
+            <select onChange={handleChange} name="NumberOfBeds">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              A/C :{" "}
+            </label>
+            <Space direction="vertical">
+              <Switch
+                onChange={() =>
+                  setRoomDetails((prev) => ({
+                    ...prev,
+                    AC: !roomDetails.AC,
+                  }))
+                }
+                checkedChildren="Yes"
+                unCheckedChildren="No"
+                defaultChecked
+              />
+            </Space>
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              Toilets :{" "}
+            </label>
+            <select onChange={handleChange} name="Toilets">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              Floor :{" "}
+            </label>
+            <input
+              onChange={handleChange}
+              type="text"
+              name="Floor"
+              id=""
+              className="border rounded px-2"
+            />{" "}
+          </div>
+          <div className="py-5">
+            <label htmlFor="" className="">
+              Cleaning Status :{" "}
+            </label>
+            <select
+              id="cleaningStatus"
+              onChange={handleChange}
+              name="CleaningStatus"
+            >
+              <option value="clean">Clean</option>
+              <option value="dirty">Dirty</option>
+              <option value="inspecting">Inspecting</option>
+              <option value="underMaintenance">Under Maintenance</option>
+              <option value="vacant">Vacant</option>
+              <option value="occupied">Occupied</option>
+              <option value="pendingCleaning">Pending Cleaning</option>
+              <option value="partiallyCleaned">Partially Cleaned</option>
+              <option value="readyForInspection">Ready for Inspection</option>
+              <option value="outOfService">Out of Service</option>
+              <option value="doNotDisturb">Do Not Disturb</option>
+              <option value="cleaningInProgress">Cleaning in Progress</option>
+              <option value="needsSupplies">Needs Supplies</option>
+              <option value="checkedOut">Checked-Out</option>
+              <option value="noShow">No Show</option>
+            </select>
           </div>
           <div className="py-5">
             <label htmlFor="" className="">
               Price :{" "}
             </label>
-            <input type="text" name="" id="" className="border rounded px-2" />{" "}
+            <input
+              onChange={handleChange}
+              type="number"
+              name="Price"
+              id=""
+              className="border rounded px-2"
+            />{" "}
           </div>
         </div>
         <div className="mt-10 border rounded p-5 mr-10">
-            Images:<input type="file"/>
+          Images :
+          <input type="file" />
         </div>
+        <button onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );

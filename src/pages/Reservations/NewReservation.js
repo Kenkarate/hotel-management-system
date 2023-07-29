@@ -97,7 +97,9 @@ function NewReservation() {
               Confirmed by :
             </p>
           </div>
-          <button className="m-10 bg-green-400 rounded p-2 hover:bg-green-600">Submit</button>
+          <button className="m-10 bg-green-400 rounded p-2 hover:bg-green-600">
+            Submit
+          </button>
         </div>
       </div>
     </div>

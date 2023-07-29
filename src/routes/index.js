@@ -14,6 +14,7 @@ import CreateUser from '../pages/CreateUser';
 import NewReservation from '../pages/Reservations/NewReservation';
 import ManageRooms from '../pages/Rooms/ManageRooms';
 import AddRoom from '../pages/Rooms/AddRoom';
+import ListRooms from '../pages/Rooms/ListRooms';
 
 const Navigation = () => {
     // const authToken = getToken();
@@ -61,6 +62,11 @@ const Navigation = () => {
                         exact
                         path="/add-room"
                         component={AddRoom}
+                    />
+                    <PrivateRoute
+                        exact
+                        path="/rooms"
+                        component={ListRooms}
                     />
                     <Route component={NotFoundPage} />
                 </Switch>
