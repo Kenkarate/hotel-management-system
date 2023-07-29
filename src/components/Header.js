@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { TbLogout } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/UserSlice";
 
 function Header() {
+  const dispatch = useDispatch();
   return (
     <div className=" bg-blue-100 grid grid-cols-2 fixed w-full h-[8vh]">
       <div className="p-5">
@@ -16,10 +19,10 @@ function Header() {
           Dashboard
         </a>
         <a
-          href="/dashboard"
+          href="/availability"
           className="px-2 font-semibold hover:border hover:bg-black hover:text-white p-3 rounded"
         >
-          Something
+          Availability
         </a>
         <a
           href="/dashboard"
@@ -34,10 +37,13 @@ function Header() {
           Reports
         </a>
         <div className="flex gap-2 my-auto">
-          <a href="/login" onClick={() => sessionStorage.removeItem("token")}>
+          <a
+            href="/login"
+            onClick={() => dispatch(addUser({ authtoken: null, email: null }))}
+          >
             Logout
           </a>
-            <TbLogout />
+          <TbLogout />
         </div>
       </div>
     </div>

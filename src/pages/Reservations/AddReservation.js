@@ -1,11 +1,11 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar";
 
-function NewReservation() {
+function AddReservation() {
   return (
     <div>
       <Sidebar />
-      <div className="ml-[15vw]  pt-[12vh] pl-5">
+      <div className="ml-[20vw]  pt-[12vh] ">
         <h1 className="py-5 text-4xl font-bold">Add new reservation</h1>
         <div className="border rounded p-10">
           <h3 className="text-lg font-semibold py-2">Personal info</h3>
@@ -106,4 +106,4 @@ function NewReservation() {
   );
 }
 
-export default NewReservation;
+export default AddReservation;

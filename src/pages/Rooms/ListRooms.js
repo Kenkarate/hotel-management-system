@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
+import { listAll, ref } from "firebase/storage";
 
 function ListRooms() {
   const [roomList, setRoomList] = useState("");
@@ -19,7 +20,7 @@ function ListRooms() {
         id: doc.id,
       }));
       setRoomList(filteredData);
-      // console.log(filteredData);
+    //   console.log(filteredData);
       // roomList.map((item)=>console.log(item.Price))
     } catch (err) {
       console.log(err);
@@ -32,11 +33,20 @@ function ListRooms() {
     await deleteDoc(roomDoc);
   };
 
-
+  
   // calling the list
   useEffect(() => {
-    handleSubmit();
-  }, [deleteRoom]);
+      handleSubmit();
+    }, [deleteRoom]);
+    
+    
+    const ImageRef = ref(storage,'Corner Club Suite/')
+
+//   Images from the database 
+useEffect(()=>{
+    listAll(ImageRef)
+})
+
   return (
     <div>
       <Sidebar />

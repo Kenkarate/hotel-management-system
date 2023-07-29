@@ -4,20 +4,23 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { app } from "../firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/UserSlice";
 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const navigate = useNavigate()
-
+const dispatch = useDispatch()
   const auth = getAuth(app);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        sessionStorage.setItem('token',user.accessToken)
+        dispatch(addUser({authtoken:user.stsTokenManager.accessToken,email:user.email}))
+        // sessionStorage.setItem('token',user.accessToken)
         window.location.replace('/dashboard')
         console.log("loggedin", user);
         setEmail("");

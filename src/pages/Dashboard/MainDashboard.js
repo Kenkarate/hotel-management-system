@@ -28,16 +28,14 @@ function MainDashboard() {
       <Sidebar />
       <div className=" ">
         <div className=" ml-[20vw] grid grid-cols-4 pt-[12vh] mr-10">
-          <div className="bg-green-300 rounded p-5 m-5">
-            Total Rooms : {roomList.length}
-          </div>
-          <div className="bg-green-300 rounded p-5 m-5">Reservations : 50</div>
-          <div className="bg-green-300 rounded p-5 m-5">Staffs : 50</div>
-          <div className="bg-green-300 rounded p-5 m-5">Booked Rooms : 50</div>
-          <div className="bg-green-300 rounded p-5 m-5">
+          <div className="bg-green-300 rounded p-5 m-5">Total Rooms : {roomList.length}</div>
+          <div className="bg-orange-300 rounded p-5 m-5">Reservations : 50</div>
+          <div className="bg-blue-300 rounded p-5 m-5">Staffs : 50</div>
+          <div className="bg-gray-300 rounded p-5 m-5">Booked Rooms : 50</div>
+          <div className="bg-lime-300 rounded p-5 m-5">
             Available Rooms : 50
           </div>
-          <div className="bg-green-300 rounded p-5 m-5">Checked In : 50</div>
+          <div className="bg-slate-300 rounded p-5 m-5">Checked In : 50</div>
         </div>
         <div className="my-10  ml-[20vw] pt-[12vh] mr-10">
           <h2 className="my-5 text-3xl font-semibold">Available Rooms</h2>
@@ -64,7 +62,10 @@ function MainDashboard() {
             <tbody>
               {roomList &&
                 roomList.map((rooms, key) => {
-                  if (rooms.Availablility === true &&rooms.CleaningStatus==='clean') {
+                  if (
+                    rooms.Availablility === true &&
+                    rooms.CleaningStatus === "clean"
+                  ) {
                     return (
                       <tr
                         key={key}
@@ -80,7 +81,9 @@ function MainDashboard() {
                         <td className="py-2 text-center">{rooms.Category}</td>
                         <td className="py-2 text-center">{rooms.Floor}</td>
                         <td className="py-2 text-center">{rooms.RoomNumber}</td>
-                        <td className="py-2 text-center">{rooms.CleaningStatus}</td>
+                        <td className="py-2 text-center">
+                          {rooms.CleaningStatus}
+                        </td>
                         <td className="py-2 text-center">{rooms.BedType}</td>
                       </tr>
                     );

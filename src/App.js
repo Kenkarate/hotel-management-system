@@ -6,14 +6,17 @@ import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import MainDashboard from "./pages/Dashboard/MainDashboard";
 import Header from "./components/Header";
-import NewReservation from "./pages/Reservations/NewReservation";
+import AddReservation from "./pages/Reservations/AddReservation";
 
 import AddRoom from "./pages/Rooms/AddRoom";
 import ListRooms from "./pages/Rooms/ListRooms";
+import AvailabilityList from "./pages/Availability/AvailabilityList";
+import { useSelector } from "react-redux";
+import ReservationList from "./pages/Reservations/ReservationList";
 function App() {
-  const authToken = sessionStorage.getItem("token");
-
-  if (!authToken) {
+  const authToken = useSelector((state) => state.user.value);
+  console.log(authToken.authtoken);
+  if (!authToken.authtoken) {
     return <Login />;
   }
 
@@ -24,14 +27,15 @@ function App() {
         <Routes>
           {/* COMMON ROUTES */}
           <Route exact path="/" element={<Login />} />
-
           <Route exact path="/createuser" element={<CreateUser />} />
-
           <Route exact path="/dashboard" element={<MainDashboard />} />
-          <Route exact path="/reservation" element={<NewReservation />} />
-
+          <Route exact path="/reservation" element={<ReservationList />} />
           <Route exact path="/add-room" element={<AddRoom />} />
+          <Route exact path="/add-reservation" element={<AddReservation />} />
           <Route exact path="/rooms" element={<ListRooms />} />
+          <Route exact path="/availability" element={<AvailabilityList />} />
+
+          
           {/* RESET PASSWORD ROUTES */}
           {/* <Route
                         exact
