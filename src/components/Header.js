@@ -2,10 +2,11 @@ import React from "react";
 
 function Header() {
   return (
-    <div className=" bg-blue-100 grid grid-cols-2 fixed w-full h-[8vh]">
+    <div className=" bg-blue-100 grid grid-cols-3 fixed w-full h-[8vh]">
       <div className="p-5">
-        <p>Logo</p>
+        <p className="text-xl font-bold">Hotel Management System</p>
       </div>
+      <div></div>
       <div className="my-auto ">
         <a
           href="/dashboard"
