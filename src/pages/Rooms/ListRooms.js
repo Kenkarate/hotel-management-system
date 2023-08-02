@@ -1,36 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db, storage } from "../../firebase";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { RiEditFill } from "react-icons/ri";
-import { useSelector } from "react-redux";
-import ReservationList from "../Reservations/ReservationList";
-import ResponsiveSidebar from "../../components/ResponsiveSidebar";
-import { Button, Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Table, message } from "antd";
 import { Link } from "react-router-dom";
+import { getRooms } from "../../redux/RoomSlice";
+import ModalBox from "../../components/ModalBox";
 
 function ListRooms() {
-  // const [roomList, setRoomList] = useState("");
-
   const RoomCollection = collection(db, "rooms");
-  const roomList = useSelector((state) => state.rooms.value);
+  const dispatch = useDispatch();
+  const [roomList, setRoomList] = useState();
+  const [open, setOpen] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
 
-  //   Add a Room
-  // const handleSubmit = async () => {
-  //   try {
-  //     const data = await getDocs(RoomCollection);
-  //     const filteredData = data.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-  //     setRoomList(filteredData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  // Fetch roomlist
+  const GetRoomList = async () => {
+    try {
+      const data = await getDocs(RoomCollection);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setRoomList(filteredData);
+      dispatch(getRooms(filteredData));
+      // roomList.map((item)=>console.log(item.Price))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    GetRoomList();
+  }, []);
 
   //   Delete a Room
   const deleteRoom = async (id) => {
+    showModal()
     const roomDoc = doc(db, "rooms", id);
     await deleteDoc(roomDoc);
     console.log(id);
@@ -45,7 +53,7 @@ function ListRooms() {
 
   // table
 
-  const data = roomList.map((item, key) => {
+  const data = roomList?.map((item, key) => {
     return {
       key: key,
       name: item.RoomName,
@@ -54,7 +62,7 @@ function ListRooms() {
       roomNumber: item.RoomNumber,
       bedType: item.BedType,
       price: item.Price,
-      id:item.id
+      id: item.id,
     };
   });
   // console.log(data);
@@ -112,7 +120,7 @@ function ListRooms() {
           value: "New York",
         },
       ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      // onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
       title: "Category",
@@ -127,7 +135,7 @@ function ListRooms() {
           value: "New York",
         },
       ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      // onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
       title: "Floor",
@@ -142,7 +150,7 @@ function ListRooms() {
           value: "New York",
         },
       ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      // onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
       title: "Bed Type",
@@ -157,14 +165,14 @@ function ListRooms() {
           value: "New York",
         },
       ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      // onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
       title: "Action",
       dataIndex: "id",
       key: "x",
       render: (record) => (
-        <Button  onClick={(record)=>deleteRoom(record)}>Delete</Button>
+        <Button onClick={() => deleteRoom(record)}>Delete</Button>
       ),
     },
   ];
@@ -183,10 +191,10 @@ function ListRooms() {
           </Link>
         </div>
         <h2 className="my-5 text-3xl font-semibold">Rooms</h2>
-
+      <ModalBox open={open} setOpen={setOpen}/>
         <Table columns={columns} dataSource={data} onChange={onChange} />
 
-        <table className="w-full border ">
+        {/* <table className="w-full border ">
           <thead>
             <tr className="border">
               <td className=" py-4 text-xl font-bold text-center">Name</td>
@@ -229,7 +237,7 @@ function ListRooms() {
                 );
               })}
           </tbody>
-        </table>
+        </table> */}
       </div>
     </div>
   );

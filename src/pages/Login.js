@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" grid lg:grid-cols-2  w-full ">
+    <div className=" col-span-6 grid grid-cols-2">
       <div className="order-1 mx-auto my-auto ">
         <Title className="py-10">Login</Title>
         <div>
@@ -96,7 +96,9 @@ const Login = () => {
           Create a new account?
         </a>
       </div>
-      <div className=" w-full h-screen bg-green-500"></div>
+      <div className=" w-full h-screen bg-green-500 flex justify-center">
+        <p className="my-auto font-semibold text-[90px] text-white">Hotel Managment System</p>
+      </div>
     </div>
   );
 };
