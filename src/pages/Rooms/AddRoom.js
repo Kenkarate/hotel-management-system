@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import { Space, Switch } from "antd";
+import { Button, Space, Switch } from "antd";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { storage } from "../../firebase";
 import { ref, uploadBytes } from "firebase/storage";
+import ResponsiveSidebar from "../../components/ResponsiveSidebar";
+import { Link } from "react-router-dom";
 
 function AddRoom() {
   const [image, setImage] = useState();
@@ -90,9 +92,9 @@ function AddRoom() {
   // Upload Images
 
   return (
-    <div>
-      <Sidebar />
-      <div className="ml-[20vw] pt-[12vh]">
+    <div className="col-span-5">
+      {/* <ResponsiveSidebar /> */}
+      <div className="p-10">
         {" "}
         <h2 className=" text-3xl font-semibold">Rooms</h2>
         <p>
@@ -209,7 +211,6 @@ function AddRoom() {
               onChange={handleChange}
               name="CleaningStatus"
             >
-              
               <option value="">Select</option>
               <option value="vacant">Vacant</option>
               <option value="houseUse">House Use</option>
@@ -239,7 +240,17 @@ function AddRoom() {
           Images :
           <input type="file" onChange={(e) => setImage(e.target.files[0])} />
         </div>
-        <button onClick={handleSubmit}>Submit</button>
+        {/* <Button className="float-right mr-10 my-10" >
+          Add Room
+        </Button> */}
+        <div className="py-10 mr-10">
+            <Button className="float-right mx-2" onClick={handleSubmit}>Submit</Button>
+            <Link to={"/rooms"}>
+              <Button className="float-right" danger>
+                Go Back
+              </Button>
+            </Link>
+          </div>
       </div>
     </div>
   );

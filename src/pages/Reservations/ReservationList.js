@@ -1,18 +1,25 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar";
+import ResponsiveSidebar from "../../components/ResponsiveSidebar";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 function ReservationList() {
   return (
-    <div>
-      <Sidebar />
-      <div className="ml-[20vw]  pt-[12vh] mr-10 ">
+    <div className="col-span-5">
+      {/* <ResponsiveSidebar /> */}
+      <div className="p-10 mr-10 ">
         <div className="float-right mr-10">
-          <a href="/add-reservation" className="border rounded bg-green-400 p-2 hover:bg-green-600">
+          <Link to={'/add-reservation'}>
+          <Button >
             New Reservation
-          </a>
+          </Button></Link>
         </div>
 
         <h1 className="py-5 text-4xl font-bold">Reservations</h1>
+        <div>
+          list of reservations----
+        </div>
       </div>
     </div>
   );

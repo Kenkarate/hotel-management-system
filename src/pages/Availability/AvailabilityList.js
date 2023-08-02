@@ -1,38 +1,25 @@
+import { DatePicker } from "antd";
 import React, { useState } from "react";
-import Sidebar from "../../components/Sidebar";
-import Datepicker from "react-tailwindcss-datepicker";
+
 function AvailabilityList() {
   // Calendar
-  const [value, setValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-
-  const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  };
+  const [value, setValue] = useState();
+  // console.log(value);
   // Calendar end
   return (
     <div>
-      <Sidebar />
-      <div className=" ml-[20vw] pt-[12vh] mr-10">
+      {/* <ResponsiveSidebar/> */}
+      <div className=" col-span-5 p-10 mr-10">
         <div>
-          <Datepicker
-            primaryColor={"yellow"}
-            asSingle={true}
-            useRange={false}
-            placeholder={"Select a Date..."}
-            displayFormat={"DD/MM/YYYY"}
-            value={value}
-            onChange={handleValueChange}
-            showShortcuts={true}
-          />
+          <DatePicker
+            style={{
+              width: "170%",
+            }}
+            onChange={(e) => setValue(e.$d)}
+          ></DatePicker>
         </div>
         <div className="bg-gray-300 my-10">
-            <div className=" bg-red-500 w-10 h-10">
-
-            </div>
+          <div className=" bg-red-500 w-10 h-10"></div>
         </div>
       </div>
     </div>

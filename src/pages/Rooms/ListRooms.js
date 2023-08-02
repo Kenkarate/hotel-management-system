@@ -1,62 +1,190 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar";
+import React, { useEffect } from "react";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
-import { listAll, ref } from "firebase/storage";
+import { useSelector } from "react-redux";
+import ReservationList from "../Reservations/ReservationList";
+import ResponsiveSidebar from "../../components/ResponsiveSidebar";
+import { Button, Table } from "antd";
+import { Link } from "react-router-dom";
 
 function ListRooms() {
-  const [roomList, setRoomList] = useState("");
+  // const [roomList, setRoomList] = useState("");
 
   const RoomCollection = collection(db, "rooms");
+  const roomList = useSelector((state) => state.rooms.value);
 
   //   Add a Room
-  const handleSubmit = async () => {
-    try {
-      const data = await getDocs(RoomCollection);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setRoomList(filteredData);
-    //   console.log(filteredData);
-      // roomList.map((item)=>console.log(item.Price))
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleSubmit = async () => {
+  //   try {
+  //     const data = await getDocs(RoomCollection);
+  //     const filteredData = data.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
+  //     setRoomList(filteredData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   //   Delete a Room
   const deleteRoom = async (id) => {
     const roomDoc = doc(db, "rooms", id);
     await deleteDoc(roomDoc);
+    console.log(id);
   };
 
-  
   // calling the list
-  useEffect(() => {
-      handleSubmit();
-    }, [deleteRoom]);
-    
-    
-    const ImageRef = ref(storage,'Corner Club Suite/')
+  // useEffect(() => {
+  //     handleSubmit();
+  //   },[]);
 
-//   Images from the database 
-useEffect(()=>{
-    listAll(ImageRef)
-})
+  console.log("running");
+
+  // table
+
+  const data = roomList.map((item, key) => {
+    return {
+      key: key,
+      name: item.RoomName,
+      category: item.Category,
+      floor: item.Floor,
+      roomNumber: item.RoomNumber,
+      bedType: item.BedType,
+      price: item.Price,
+      id:item.id
+    };
+  });
+  // console.log(data);
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      filters: [
+        {
+          text: "Joe",
+          value: "Joe",
+        },
+        {
+          text: "Jim",
+          value: "Jim",
+        },
+        {
+          text: "Submenu",
+          value: "Submenu",
+          children: [
+            {
+              text: "Green",
+              value: "Green",
+            },
+            {
+              text: "Black",
+              value: "Black",
+            },
+          ],
+        },
+      ],
+      // specify the condition of filtering result
+      // here is that finding the name started with `value`
+      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["descend"],
+    },
+    {
+      title: "Room Number",
+      dataIndex: "roomNumber",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.roomNumber - b.roomNumber,
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      filters: [
+        {
+          text: "London",
+          value: "London",
+        },
+        {
+          text: "New York",
+          value: "New York",
+        },
+      ],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      filters: [
+        {
+          text: "London",
+          value: "London",
+        },
+        {
+          text: "New York",
+          value: "New York",
+        },
+      ],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
+    {
+      title: "Floor",
+      dataIndex: "floor",
+      filters: [
+        {
+          text: "London",
+          value: "London",
+        },
+        {
+          text: "New York",
+          value: "New York",
+        },
+      ],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
+    {
+      title: "Bed Type",
+      dataIndex: "bedType",
+      filters: [
+        {
+          text: "London",
+          value: "London",
+        },
+        {
+          text: "New York",
+          value: "New York",
+        },
+      ],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      key: "x",
+      render: (record) => (
+        <Button  onClick={(record)=>deleteRoom(record)}>Delete</Button>
+      ),
+    },
+  ];
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
 
   return (
-    <div>
-      <Sidebar />
-      <div className="ml-[20vw] pt-[12vh] mr-10">
+    <div className=" col-span-5">
+      {/* <ResponsiveSidebar /> */}
+      <div className=" p-10 mr-10">
         <div className="float-right mr-10">
-          <a href="/add-room" className="border rounded bg-green-400 p-1">
-            Add New Room
-          </a>
+          <Link to={"/add-room"}>
+            <Button>Add New Room</Button>
+          </Link>
         </div>
         <h2 className="my-5 text-3xl font-semibold">Rooms</h2>
+
+        <Table columns={columns} dataSource={data} onChange={onChange} />
 
         <table className="w-full border ">
           <thead>
@@ -68,7 +196,6 @@ useEffect(()=>{
               <td className=" py-4 text-xl font-bold text-center">
                 Room Number
               </td>
-
               <td className=" py-4 text-xl font-bold text-center">Bed Type</td>
               <td>Actions</td>
             </tr>
@@ -94,8 +221,9 @@ useEffect(()=>{
                     <td className="py-2 text-center">{rooms.BedType}</td>
                     <td className="flex gap-2 py-2">
                       <RiEditFill />
-                      <button onClick={() => deleteRoom(rooms.id)}><RiDeleteBin6Fill  /></button>
-                      
+                      <button onClick={() => deleteRoom(rooms.id)}>
+                        <RiDeleteBin6Fill />
+                      </button>
                     </td>
                   </tr>
                 );

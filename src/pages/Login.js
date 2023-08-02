@@ -1,31 +1,34 @@
 import React, { useState } from "react";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/UserSlice";
-
+import { Button, Input } from "antd";
+import Title from "antd/es/typography/Title";
+import Paragraph from "antd/es/typography/Paragraph";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const navigate = useNavigate()
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const auth = getAuth(app);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        dispatch(addUser({authtoken:user.stsTokenManager.accessToken,email:user.email}))
+        dispatch(
+          addUser({
+            authtoken: user.stsTokenManager.accessToken,
+            email: user.email,
+          })
+        );
         // sessionStorage.setItem('token',user.accessToken)
-        window.location.replace('/dashboard')
+        window.location.replace("/dashboard");
         console.log("loggedin", user);
         setEmail("");
         setPassword("");
-
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -35,27 +38,65 @@ const dispatch = useDispatch()
   };
 
   return (
-    <div className="m-20 grid grid-rows-4 gap-5 w-[40vw] mx-auto ">
-      <input
-        className="border rounded p-2"
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <input
-        className="border rounded p-2"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <button onClick={handleLogin}>Login</button>
-      <a href="/createuser"> Create a new account?</a>
+    <div className=" grid lg:grid-cols-2  w-full ">
+      <div className="order-1 mx-auto my-auto ">
+        <Title className="py-10">Login</Title>
+        <div>
+          <label level={5} htmlFor="Email" className="text-sm my-2">
+            Email
+          </label>
+          <br />
+          <Input
+            placeholder="Email..."
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          {/* <input
+            className="border rounded p-2"
+            type="email"
+            placeholder="Email..."
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />{" "} */}
+        </div>{" "}
+        <br />
+        <div>
+          <label htmlFor="" className="text-sm ">
+            Password
+          </label>{" "}
+          <Input.Password
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="Password..."
+          />
+          {/* <input
+            className="border rounded p-2"
+            type="password"
+            placeholder="Password..."
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />{" "} */}
+        </div>{" "}
+        <br />
+        <Button
+          type="primary"
+          onClick={handleLogin}
+          className="my-2 bg-blue-400"
+        >
+          Login
+        </Button>
+        <a href="/createuser" className="mx-2">
+          {" "}
+          Create a new account?
+        </a>
+      </div>
+      <div className=" w-full h-screen bg-green-500"></div>
     </div>
   );
 };

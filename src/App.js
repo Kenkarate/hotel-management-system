@@ -13,29 +13,36 @@ import ListRooms from "./pages/Rooms/ListRooms";
 import AvailabilityList from "./pages/Availability/AvailabilityList";
 import { useSelector } from "react-redux";
 import ReservationList from "./pages/Reservations/ReservationList";
+import ResponsiveSidebar from "./components/ResponsiveSidebar";
+import SelectOrganisation from "./pages/Organisation/SelectOrganisation";
+
 function App() {
   const authToken = useSelector((state) => state.user.value);
-  console.log(authToken.authtoken);
   if (!authToken.authtoken) {
     return <Login />;
   }
+  console.log(window.location.pathname);
 
   return (
-    <div className="wrapper">
-      <Header />
+    <div className="wrapper grid grid-cols-6 ">
       <Router>
+        {window.location.pathname === "/" ||
+          (window.location.pathname !== "/organisation" && (
+            <ResponsiveSidebar />
+          ))}
         <Routes>
+          <Route exact path="/" element={<Login  />} />
+          <Route exact path="/organisation" element={<SelectOrganisation />} />
+
           {/* COMMON ROUTES */}
-          <Route exact path="/" element={<Login />} />
           <Route exact path="/createuser" element={<CreateUser />} />
+          <Route exact path="/rooms" element={<ListRooms />} />
           <Route exact path="/dashboard" element={<MainDashboard />} />
           <Route exact path="/reservation" element={<ReservationList />} />
           <Route exact path="/add-room" element={<AddRoom />} />
           <Route exact path="/add-reservation" element={<AddReservation />} />
-          <Route exact path="/rooms" element={<ListRooms />} />
           <Route exact path="/availability" element={<AvailabilityList />} />
 
-          
           {/* RESET PASSWORD ROUTES */}
           {/* <Route
                         exact

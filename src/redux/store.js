@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import UserSlice from "./UserSlice";
+import UserReducer from "./UserSlice";
 import { persistReducer, persistStore } from "redux-persist";
-import thunk from "redux-thunk";
-import sessionStorage from 'redux-persist/es/storage/session';
+
+import sessionStorage from "redux-persist/es/storage/session";
+import RoomReducer from "./RoomSlice";
 
 const persistConfig = {
   key: "root",
@@ -11,7 +12,8 @@ const persistConfig = {
 
 // Combine all your reducers here
 const rootReducer = combineReducers({
-  user: UserSlice,
+  user: UserReducer,
+  rooms: RoomReducer,
   // Add other reducers if you have more
 });
 
