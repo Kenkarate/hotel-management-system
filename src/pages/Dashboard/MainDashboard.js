@@ -4,7 +4,7 @@ import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import Title from "antd/es/typography/Title";
 import { Button, Card, DatePicker } from "antd";
-import { FiArrowDown, FiArrowUp, FiEdit } from "react-icons/fi";
+import {  FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./index.css";
 import { getRooms } from "../../redux/RoomSlice";
@@ -14,7 +14,7 @@ function MainDashboard() {
   const [roomList, setRoomList] = useState("");
   const dispatch = useDispatch();
   const RoomCollection = collection(db, "rooms");
-  const email = useSelector((state) => state.user.value);
+  const userCredentials = useSelector((state) => state.user.value);
 
   const gridStyle = {
     width: "25%",
@@ -55,8 +55,8 @@ function MainDashboard() {
             <div className="my-auto">Resort</div>
             <div className="my-auto">
               <p>
-                Good Morning! <span className="capitalize">{email.email} </span>{" "}
-                |
+                Good Morning!{" "}
+                <span className="capitalize">{userCredentials.name} </span> |
               </p>
             </div>
             <div className="my-auto">
@@ -89,21 +89,16 @@ function MainDashboard() {
                         Profile
                       </a>
                     </li>
-                    <li class="">
-                      <a
-                        class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                        href="/"
-                      >
+                    <li
+                      onClick={() => {
+                        sessionStorage.clear();
+                        window.location.reload();
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <p class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
                         Logout
-                      </a>
-                    </li>
-                    <li class="">
-                      <a
-                        class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                        href="/"
-                      >
-                        Logout
-                      </a>
+                      </p>
                     </li>
                   </ul>
                 </div>

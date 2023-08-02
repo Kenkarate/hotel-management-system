@@ -11,6 +11,7 @@ import AddRoom from '../pages/Rooms/AddRoom';
 import ListRooms from '../pages/Rooms/ListRooms';
 import AvailabilityList from '../pages/Availability/AvailabilityList';
 import Login from '../pages/Login';
+import AccountDashboard from '../pages/Account/AccountDashboard';
 
 const Navigation = () => {
   // ... Your existing code ...
@@ -30,6 +31,7 @@ const Navigation = () => {
               <PrivateRoute path="/add-room" element={<AddRoom />} />
               <PrivateRoute path="/rooms" element={<ListRooms />} />
               <PrivateRoute path="/availability" element={<AvailabilityList />} />
+              <PrivateRoute path="/account" element={<AccountDashboard />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>

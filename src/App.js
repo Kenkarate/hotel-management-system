@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import MainDashboard from "./pages/Dashboard/MainDashboard";
-import Header from "./components/Header";
+
 import AddReservation from "./pages/Reservations/AddReservation";
 
 import AddRoom from "./pages/Rooms/AddRoom";
@@ -15,10 +15,11 @@ import { useSelector } from "react-redux";
 import ReservationList from "./pages/Reservations/ReservationList";
 import ResponsiveSidebar from "./components/ResponsiveSidebar";
 import SelectOrganisation from "./pages/Organisation/SelectOrganisation";
+import AccountDashboard from "./pages/Account/AccountDashboard";
 
 function App() {
-  const authToken = useSelector((state) => state.user.value);
-  if (!authToken.authtoken) {
+  const userCredential = useSelector((state) => state.user.value);
+  if (!userCredential.authtoken) {
     return <Login />;
   }
   console.log(window.location.pathname);
@@ -42,6 +43,7 @@ function App() {
           <Route exact path="/add-room" element={<AddRoom />} />
           <Route exact path="/add-reservation" element={<AddReservation />} />
           <Route exact path="/availability" element={<AvailabilityList />} />
+          <Route exact path="/account" element={<AccountDashboard />} />
 
           {/* RESET PASSWORD ROUTES */}
           {/* <Route

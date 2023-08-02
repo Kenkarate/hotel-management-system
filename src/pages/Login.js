@@ -22,6 +22,7 @@ const Login = () => {
           addUser({
             authtoken: user.stsTokenManager.accessToken,
             email: user.email,
+            name:user.email.split("@")[0]
           })
         );
         // sessionStorage.setItem('token',user.accessToken)

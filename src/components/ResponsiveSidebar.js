@@ -12,11 +12,11 @@ const ResponsiveSidebar = () => {
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "Manage Rooms", link: "/rooms", icon: AiOutlineUser },
     { name: "Reservations", link: "/reservation", icon: FiMessageSquare },
-    { name: "analytics", link: "/", icon: TbReportAnalytics, margin: true },
-    { name: "File Manager", link: "/", icon: FiFolder },
-    { name: "Cart", link: "/", icon: FiShoppingCart },
-    { name: "Saved", link: "/", icon: AiOutlineHeart, margin: true },
-    { name: "Setting", link: "/", icon: RiSettings4Line },
+    { name: "Staffs", link: "/", icon: TbReportAnalytics, margin: true },
+    { name: "Restaurent", link: "/", icon: FiFolder },
+    { name: "Inventory", link: "/", icon: FiShoppingCart },
+    { name: "Reports", link: "/", icon: AiOutlineHeart, margin: true },
+    { name: "Account", link: "/account", icon: RiSettings4Line },
   ];
   const [open, setOpen] = useState(true);
   return (
