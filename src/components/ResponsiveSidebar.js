@@ -15,7 +15,7 @@ const ResponsiveSidebar = () => {
     { name: "Staffs", link: "/", icon: TbReportAnalytics, margin: true },
     { name: "Restaurent", link: "/", icon: FiFolder },
     { name: "Inventory", link: "/", icon: FiShoppingCart },
-    { name: "Reports", link: "/", icon: AiOutlineHeart, margin: true },
+    { name: "Reports", link: "/reports", icon: AiOutlineHeart, margin: true },
     { name: "Account", link: "/account", icon: RiSettings4Line },
   ];
   const [open, setOpen] = useState(true);

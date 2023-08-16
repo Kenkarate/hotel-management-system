@@ -4,11 +4,11 @@ import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import Title from "antd/es/typography/Title";
 import { Button, Card, DatePicker } from "antd";
-import {  FiEdit } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./index.css";
 import { getRooms } from "../../redux/RoomSlice";
-
+import PieChart from "../../components/Charts/PieChart";
 
 function MainDashboard() {
   const [roomList, setRoomList] = useState("");
@@ -17,7 +17,6 @@ function MainDashboard() {
   const userCredentials = useSelector((state) => state.user.value);
 
   const gridStyle = {
-    width: "25%",
     textAlign: "center",
   };
 
@@ -46,11 +45,9 @@ function MainDashboard() {
       {/* <ResponsiveSidebar /> */}
 
       <div className="p-10 ">
-        <div className="h-[10vh]">
+        <div className="h-[10vh] w-full">
           <div className="flex justify-between ">
-            <Title className="my-auto" level={2}>
-              Dashboard
-            </Title>
+            <Title className="my-auto ">Dashboard</Title>
 
             <div className="my-auto">Resort</div>
             <div className="my-auto">
@@ -107,128 +104,8 @@ function MainDashboard() {
           </div>
         </div>
 
-        {/* <div className="grid lg:grid-cols-2 gap-2 font-light text-sm pb-10">
-          <div className="bg-gray-200 rounded-lg p-5">
-            <p className="text-xl py-2 pt-4">Reservation</p>
-            <div className="grid grid-cols-3 gap-10">
-              <div className="flex ">
-                <HiHome className=" w-8 h-8" />
-                <div>
-                  <p>In Home</p>
-                  <Title level={5}>20</Title>
-                </div>
-              </div>
-              <div className="flex ">
-                <FiArrowDown className=" w-8 h-8" />
-                <div>
-                  <p>Arrival</p>
-                  <Title level={5}>14</Title>
-                </div>
-              </div>
-              <div className="flex ">
-                <FiArrowUp className=" w-8 h-8" />
-                <div>
-                  <p>Departure</p>
-                  <Title level={5}>27</Title>
-                </div>
-              </div>
-            </div>
-            <p className="text-xl py-2 pt-4">House Keeping</p>
-            <div className="grid grid-cols-3 gap-5">
-              <div className="flex ">
-                <MdCleaningServices className=" w-8 h-8" />
-                <div>
-                  <p>Cleaning</p>
-                  <Title level={5}>12</Title>
-                </div>
-              </div>
-              <div className="flex ">
-                <TbVacuumCleaner className=" w-8 h-8" />
-                <div>
-                  <p>Vacant</p>
-                  <Title level={5}>14</Title>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="border border-gray-300 rounded-lg p-5">
-            <p className="text-xl">Occupancy</p>
-            <div className="grid grid-cols-3">
-              <div>
-                <p>Vacant</p>
-                <p>49</p>
-              </div>
-              <div>
-                <p>Occupied</p>
-                <p>49</p>
-              </div>
-              <div>
-                <p>Not Ready</p>
-                <p>49</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
-        {/* setion two  */}
-        {/* <div className="grid grid-cols-3 gap-5 py-5 font-light ">
-          <div className="border rounded-lg p-5">
-            <p className="text-xl">New Customer</p>
-            <div>
-              <table className="w-full text-center">
-                <thead>
-                  <th>Name</th>
-                  <th>Room No</th>
-                  <th>Date</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                  </tr>
-                  <tr>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                  </tr>
-                  <tr>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                    <td>Ajesh</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="border bg-gray-100 rounded-lg p-5 h-[40vh] overflow-scroll">
-            <p className="text-xl">Recent Activities</p>
-            <div className="flex justify-between">
-              <div className="">
-                <p>Room #1430</p>
-                <p>Zain ahmad requested for a coffee</p>
-              </div>
-              <p className="">1min</p>
-            </div>
-            <div className="flex justify-between">
-              <div className="">
-                <p>Room #1430</p>
-                <p>Zain ahmad requested for a coffee</p>
-              </div>
-              <p className="">1min</p>
-            </div>
-            <div className="flex justify-between">
-              <div className="">
-                <p>Room #1430</p>
-                <p>Zain ahmad requested for a coffee</p>
-              </div>
-              <p className="">1min</p>
-            </div>
-          </div>
-        </div> */}
-        {/* setion two end */}
-
         {/* section  */}
-        <div className=" grid lg:grid-cols-6 gap-5  mr-10">
+        <div className=" grid lg:grid-cols-6 gap-5  mr-10 ">
           <div className="bg-green-300 rounded p-2 ">
             Total Rooms : {roomList.length}
           </div>
@@ -240,15 +117,18 @@ function MainDashboard() {
         </div>
         <div className="pt-20">
           <Card title="Quick Links">
-            <Card.Grid style={gridStyle}>New Reservation</Card.Grid>
-            <Card.Grid hoverable={false} style={gridStyle}>
-              Check IN
-            </Card.Grid>
-            <Card.Grid style={gridStyle}>Check Out</Card.Grid>
-            <Card.Grid style={gridStyle}>Reservations</Card.Grid>
-            <Card.Grid style={gridStyle}>Calendar</Card.Grid>
-            <Card.Grid style={gridStyle}>Reports</Card.Grid>
-            <Card.Grid style={gridStyle}>Content</Card.Grid>
+            <div className="grid grid-cols-4 cursor-pointer ">
+              <Link to={"/reservation"}>
+                <Card.Grid style={{ width: "100%" }}>New Reservation</Card.Grid>
+              </Link>
+              <Card.Grid style={{ width: "100%" }}>Check IN</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Check Out</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Reservations</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Kitchen</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Staffs</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Calendar</Card.Grid>
+              <Card.Grid style={{ width: "100%" }}>Reports</Card.Grid>
+            </div>
           </Card>
         </div>
         {/* <div>

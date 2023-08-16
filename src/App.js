@@ -16,6 +16,7 @@ import ReservationList from "./pages/Reservations/ReservationList";
 import ResponsiveSidebar from "./components/ResponsiveSidebar";
 import SelectOrganisation from "./pages/Organisation/SelectOrganisation";
 import AccountDashboard from "./pages/Account/AccountDashboard";
+import ReportDashboard from "./pages/Reports/ReportDashboard";
 
 function App() {
   const userCredential = useSelector((state) => state.user.value);
@@ -25,14 +26,14 @@ function App() {
   console.log(window.location.pathname);
 
   return (
-    <div className="wrapper grid grid-cols-6 ">
+    <div className="wrapper flex ">
       <Router>
         {window.location.pathname === "/" ||
           (window.location.pathname !== "/organisation" && (
             <ResponsiveSidebar />
           ))}
         <Routes>
-          <Route exact path="/" element={<Login  />} />
+          <Route exact path="/" element={<Login />} />
           <Route exact path="/organisation" element={<SelectOrganisation />} />
 
           {/* COMMON ROUTES */}
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/add-reservation" element={<AddReservation />} />
           <Route exact path="/availability" element={<AvailabilityList />} />
           <Route exact path="/account" element={<AccountDashboard />} />
+          <Route exact path="/reports" element={<ReportDashboard />} />
 
           {/* RESET PASSWORD ROUTES */}
           {/* <Route
